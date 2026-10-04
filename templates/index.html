@@ -1,562 +1,1294 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CyberSentinel</title>
+    <title>CYBERSENTINEL // Security Operations</title>
 
     <style>
-* {
-    box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-html {
-    scroll-behavior: smooth;
-}
+        :root {
+            --black: #030605;
+            --dark: #07100c;
+            --panel: #09140f;
+            --panel2: #0c1b14;
+            --green: #00ff66;
+            --green2: #00ffa3;
+            --cyan: #00d9ff;
+            --red: #ff304f;
+            --yellow: #ffd166;
+            --text: #d9ffe7;
+            --muted: #658575;
+            --border: rgba(0, 255, 102, 0.18);
+        }
 
-body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #080d1a;
-    color: #f8fafc;
-    overflow-x: hidden;
-}
+        html {
+            scroll-behavior: smooth;
+        }
 
-/* HEADER */
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at 80% 10%, rgba(0,255,102,.06), transparent 25%),
+                radial-gradient(circle at 20% 80%, rgba(0,217,255,.04), transparent 25%),
+                var(--black);
+            color: var(--text);
+            font-family: "Courier New", Consolas, monospace;
+            overflow-x: hidden;
+        }
 
-header {
-    padding: 35px 5%;
-    background: #101827;
-    border-bottom: 1px solid #263244;
-}
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(
+                    rgba(0,255,102,.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(0,255,102,.018) 1px,
+                    transparent 1px
+                );
+            background-size: 35px 35px;
+            z-index: -1;
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 42px;
-    font-weight: 800;
-}
+        /* =========================
+           HEADER
+        ========================= */
 
-header p {
-    margin-top: 12px;
-    color: #94a3b8;
-    font-size: 18px;
-}
+        .top {
+            height: 72px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(3,6,5,.92);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(12px);
+        }
 
-/* MAIN */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
 
-.container {
-    width: 90%;
-    max-width: 1500px;
-    margin: auto;
-    padding: 45px 0;
-}
+        .shield {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--green);
+            display: grid;
+            place-items: center;
+            color: var(--green);
+            box-shadow: 0 0 18px rgba(0,255,102,.18);
+            font-size: 20px;
+        }
 
-.container > h2 {
-    font-size: 30px;
-    margin-bottom: 25px;
-}
+        .brand-title {
+            font-size: 19px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--green);
+        }
 
-/* MODULE GRID */
+        .brand-sub {
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-top: 3px;
+        }
 
-.cards {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
-}
+        .system {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--green);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
 
-/* CARD */
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 12px var(--green);
+            animation: pulse 1.5s infinite;
+        }
 
-.card {
-    min-width: 0;
-    background: #111827;
-    padding: 30px;
-    border-radius: 16px;
-    border: 1px solid #263244;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    transition: transform 0.2s ease,
-                border-color 0.2s ease;
-}
+        @keyframes pulse {
+            50% {
+                opacity: .35;
+            }
+        }
 
-.card:hover {
-    transform: translateY(-3px);
-    border-color: #3b82f6;
-}
+        /* =========================
+           MAIN
+        ========================= */
 
-.card h2 {
-    margin-top: 0;
-    font-size: 27px;
-}
+        .container {
+            width: min(1400px, 94%);
+            margin: auto;
+            padding: 45px 0 70px;
+        }
 
-.card p {
-    color: #cbd5e1;
-    line-height: 1.6;
-}
+        .hero {
+            border: 1px solid var(--border);
+            background: linear-gradient(
+                135deg,
+                rgba(0,255,102,.035),
+                rgba(0,217,255,.015)
+            );
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* INPUTS */
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: var(--green);
+            left: 0;
+            top: 0;
+            box-shadow: 0 0 20px var(--green);
+            animation: scanline 4s linear infinite;
+            opacity: .4;
+        }
 
-input {
-    width: 100%;
-    padding: 14px 16px;
-    margin: 12px 0;
-    border-radius: 8px;
-    border: 1px solid #334155;
-    background: #f8fafc;
-    color: #111827;
-    font-size: 15px;
-    outline: none;
-}
+        @keyframes scanline {
+            0% {
+                top: 0;
+            }
 
-input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
+            100% {
+                top: 100%;
+            }
+        }
 
-/* BUTTON */
+        .terminal-line {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
 
-button {
-    padding: 13px 22px;
-    margin-top: 2px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #2563eb;
-    color: white;
-    font-size: 15px;
-    font-weight: 700;
-    transition: 0.2s;
-}
+        .terminal-line span {
+            color: var(--green);
+        }
 
-button:hover {
-    background: #1d4ed8;
-    transform: translateY(-1px);
-}
+        .hero h1 {
+            font-size: clamp(30px, 5vw, 64px);
+            margin: 0;
+            color: white;
+            letter-spacing: 3px;
+            text-shadow: 0 0 25px rgba(0,255,102,.2);
+        }
 
-/* RESULTS */
+        .hero h1 b {
+            color: var(--green);
+        }
 
-.result {
-    margin-top: 22px;
-    padding: 22px;
-    background: #0b1220;
-    border-radius: 12px;
-    border: 1px solid #1e293b;
-    overflow-x: auto;
-}
+        .hero p {
+            color: var(--muted);
+            max-width: 800px;
+            line-height: 1.7;
+            font-size: 13px;
+        }
 
-.score {
-    font-size: 42px;
-    font-weight: 800;
-    margin-bottom: 10px;
-}
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 22px;
+        }
 
-.result h3 {
-    margin-top: 10px;
-}
+        .tag {
+            border: 1px solid var(--border);
+            padding: 7px 10px;
+            color: var(--green2);
+            font-size: 10px;
+            background: rgba(0,255,102,.025);
+        }
 
-.result ul {
-    padding-left: 22px;
-}
+        /* =========================
+           STATS
+        ========================= */
 
-.result li {
-    margin: 10px 0;
-    color: #cbd5e1;
-}
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
 
-/* NMAP OUTPUT */
+        .stat {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 19px;
+        }
 
-pre {
-    white-space: pre-wrap;
-    word-break: break-word;
-    color: #a7f3d0;
-    font-family: Consolas, monospace;
-    font-size: 13px;
-    line-height: 1.6;
-}
+        .stat-label {
+            color: var(--muted);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+        }
 
-/* LINKS */
+        .stat-value {
+            margin-top: 9px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--green);
+        }
 
-a {
-    text-decoration: none;
-}
+        .stat-info {
+            color: #486456;
+            font-size: 9px;
+            margin-top: 5px;
+        }
 
-/* SECURITY NOTICE */
+        /* =========================
+           CONSOLE
+        ========================= */
 
-.container > .card {
-    margin-top: 30px;
-}
+        .console {
+            margin-top: 18px;
+            background: #020504;
+            border: 1px solid var(--border);
+            padding: 18px;
+            min-height: 170px;
+            box-shadow: inset 0 0 35px rgba(0,255,102,.025);
+        }
 
-/* RESPONSIVE */
+        .console-header {
+            color: var(--cyan);
+            font-size: 10px;
+            border-bottom: 1px solid #102319;
+            padding-bottom: 12px;
+            margin-bottom: 13px;
+        }
 
-@media (max-width: 900px) {
+        .log {
+            font-size: 11px;
+            line-height: 1.8;
+            color: #7fa28d;
+        }
 
-    .cards {
-        grid-template-columns: 1fr;
-    }
+        .log .prompt {
+            color: var(--green);
+        }
 
-    header h1 {
-        font-size: 34px;
-    }
+        .log .ok {
+            color: var(--green2);
+        }
 
-    .container {
-        width: 94%;
-    }
-}
+        .log .info {
+            color: var(--cyan);
+        }
 
-@media (max-width: 500px) {
+        /* =========================
+           SECTION
+        ========================= */
 
-    header {
-        padding: 25px 20px;
-    }
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 38px 0 14px;
+        }
 
-    header h1 {
-        font-size: 28px;
-    }
+        .section-title {
+            color: white;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
 
-    header p {
-        font-size: 15px;
-    }
+        .section-title::before {
+            content: ">";
+            color: var(--green);
+            margin-right: 9px;
+        }
 
-    .container {
-        padding: 30px 0;
-    }
+        .section-status {
+            color: var(--green);
+            font-size: 9px;
+        }
 
-    .card {
-        padding: 22px;
-    }
+        /* =========================
+           MODULE GRID
+        ========================= */
 
-    .card h2 {
-        font-size: 23px;
-    }
-}
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0,1fr));
+            gap: 15px;
+        }
 
+        .module {
+            background: rgba(9,20,15,.82);
+            border: 1px solid var(--border);
+            padding: 22px;
+            min-width: 0;
+            transition: .2s;
+        }
 
+        .module:hover {
+            border-color: rgba(0,255,102,.5);
+            box-shadow: 0 0 25px rgba(0,255,102,.05);
+            transform: translateY(-2px);
+        }
+
+        .module-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .module-name {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .module-icon {
+            color: var(--green);
+            font-size: 22px;
+        }
+
+        .module h2 {
+            margin: 0;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        .module-state {
+            font-size: 8px;
+            color: var(--green);
+            border: 1px solid rgba(0,255,102,.3);
+            padding: 4px 7px;
+        }
+
+        .description {
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        input {
+            width: 100%;
+            background: #020604;
+            color: var(--green2);
+            border: 1px solid #183223;
+            padding: 12px;
+            outline: none;
+            font-family: inherit;
+            font-size: 11px;
+            margin-bottom: 9px;
+        }
+
+        input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 12px rgba(0,255,102,.08);
+        }
+
+        input::placeholder {
+            color: #3c5948;
+        }
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        button {
+            background: transparent;
+            color: var(--green);
+            border: 1px solid var(--green);
+            padding: 10px 15px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        button:hover {
+            background: var(--green);
+            color: #020604;
+            box-shadow: 0 0 18px rgba(0,255,102,.3);
+        }
+
+        /* =========================
+           RESULTS
+        ========================= */
+
+        .result {
+            margin-top: 17px;
+            border-top: 1px solid #13261b;
+            padding-top: 15px;
+        }
+
+        .score {
+            font-size: 29px;
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .result-label {
+            color: var(--muted);
+            font-size: 8px;
+            letter-spacing: 1px;
+            margin: 10px 0 7px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 0;
+            border-bottom: 1px solid #102018;
+            font-size: 10px;
+        }
+
+        .green {
+            color: var(--green);
+        }
+
+        .cyan {
+            color: var(--cyan);
+        }
+
+        .red {
+            color: var(--red);
+        }
+
+        .yellow {
+            color: var(--yellow);
+        }
+
+        .risk {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 5px 9px;
+            font-size: 8px;
+            font-weight: bold;
+            border: 1px solid;
+        }
+
+        .risk-low {
+            color: var(--green);
+            border-color: rgba(0,255,102,.35);
+        }
+
+        .risk-high {
+            color: var(--red);
+            border-color: rgba(255,48,79,.4);
+        }
+
+        .result ul {
+            padding-left: 17px;
+            margin-bottom: 0;
+        }
+
+        .result li {
+            color: #73917e;
+            font-size: 10px;
+            margin: 7px 0;
+        }
+
+        /* =========================
+           NMAP
+        ========================= */
+
+        pre {
+            background: #020504;
+            border: 1px solid #102018;
+            padding: 13px;
+            max-height: 250px;
+            overflow: auto;
+            color: #76e6a1;
+            font-size: 10px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        /* =========================
+           CLOUD
+        ========================= */
+
+        .finding {
+            padding: 10px 0;
+            border-bottom: 1px solid #102018;
+            font-size: 10px;
+        }
+
+        .severity {
+            font-size: 8px;
+            font-weight: bold;
+            padding: 4px 6px;
+            margin-right: 7px;
+        }
+
+        .severity.high {
+            color: var(--red);
+            background: rgba(255,48,79,.08);
+        }
+
+        .severity.medium {
+            color: var(--yellow);
+            background: rgba(255,209,102,.07);
+        }
+
+        .severity.low {
+            color: var(--green);
+            background: rgba(0,255,102,.06);
+        }
+
+        .finding-text {
+            color: #789181;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px solid #0e1c15;
+            color: #3f5a49;
+            text-align: center;
+            font-size: 9px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 950px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .top {
+                padding: 0 15px;
+            }
+
+            .brand-sub {
+                display: none;
+            }
+
+            .system {
+                font-size: 8px;
+            }
+
+            .container {
+                width: 94%;
+                padding-top: 25px;
+            }
+
+            .hero {
+                padding: 22px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head {
+                align-items: flex-start;
+                gap: 10px;
+                flex-direction: column;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+<!-- =========================
+     TOP BAR
+========================= -->
 
-<header>
+<header class="top">
 
-    <h1>🛡️ CyberSentinel</h1>
+    <div class="brand">
 
-    <p>
-        Unified Cybersecurity Monitoring &
-        Security Assessment Platform
-    </p>
+        <div class="shield">◈</div>
+
+        <div>
+            <div class="brand-title">
+                CYBERSENTINEL
+            </div>
+
+            <div class="brand-sub">
+                SECURITY OPERATIONS PLATFORM
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="system">
+
+        <span class="dot"></span>
+
+        SYSTEM ONLINE
+
+    </div>
 
 </header>
 
 
-<div class="container">
+<main class="container">
 
 
-<h2>Security Modules</h2>
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="terminal-line">
+            root@cybersentinel:~$ <span>./security_console --start</span>
+        </div>
+
+        <h1>
+            CYBER<b>SENTINEL</b>
+        </h1>
+
+        <p>
+            Unified defensive security assessment console for
+            web security analysis, malicious URL detection,
+            authorized network reconnaissance and cloud
+            security assessment.
+        </p>
 
 
-<div class="cards">
+        <div class="tags">
 
-
-<!-- WEBSHIELD -->
-
-<div class="card">
-
-    <h2>🌐 WebShield</h2>
-
-    <p>
-        Analyze website security configuration.
-    </p>
-
-    <form action="/webshield" method="POST">
-
-        <input
-            type="text"
-            name="url"
-            placeholder="https://example.com"
-            required
-        >
-
-        <br>
-
-        <button>
-            Analyze Website
-        </button>
-
-    </form>
-
-
-    {% if web_result %}
-
-    <div class="result">
-
-        {% if web_result.error %}
-
-            <p class="high">
-                ❌ {{ web_result.error }}
-            </p>
-
-        {% else %}
-
-            <div class="score">
-                {{ web_result.score }}/100
+            <div class="tag">
+                [ WEB RECON ]
             </div>
 
-            <p>
-                HTTP Status:
-                {{ web_result.status }}
-            </p>
+            <div class="tag">
+                [ URL INTELLIGENCE ]
+            </div>
 
-            <p>
-                HTTPS:
-                {% if web_result.https %}
-                    🟢 Enabled
-                {% else %}
-                    🔴 Disabled
-                {% endif %}
-            </p>
+            <div class="tag">
+                [ NETWORK RECON ]
+            </div>
 
-            <h4>Security Headers</h4>
+            <div class="tag">
+                [ CLOUD AUDIT ]
+            </div>
 
-            <ul>
+        </div>
 
-            {% for header, present in web_result.headers.items() %}
+    </section>
 
-                <li>
 
-                    {% if present %}
-                        🟢 {{ header }}
+    <!-- =========================
+         SYSTEM STATS
+    ========================= -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                SECURITY ENGINE
+            </div>
+
+            <div class="stat-value">
+                ONLINE
+            </div>
+
+            <div class="stat-info">
+                FLASK CORE ACTIVE
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                WEBSHIELD
+            </div>
+
+            <div class="stat-value">
+                READY
+            </div>
+
+            <div class="stat-info">
+                HTTP SECURITY ANALYSIS
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                NETWORK RECON
+            </div>
+
+            <div class="stat-value">
+                NMAP
+            </div>
+
+            <div class="stat-info">
+                AUTHORIZED SCANNING
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                CLOUD AUDIT
+            </div>
+
+            <div class="stat-value">
+                AWS
+            </div>
+
+            <div class="stat-info">
+                CONFIGURATION ANALYSIS
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         LIVE CONSOLE
+    ========================= -->
+
+    <section class="console">
+
+        <div class="console-header">
+            CYBERSENTINEL // LIVE SECURITY CONSOLE
+        </div>
+
+        <div class="log">
+
+            <div>
+                <span class="prompt">root@sentinel:~$</span>
+                initializing security engine...
+            </div>
+
+            <div>
+                <span class="ok">[ OK ]</span>
+                WebShield module loaded
+            </div>
+
+            <div>
+                <span class="ok">[ OK ]</span>
+                URL intelligence module loaded
+            </div>
+
+            <div>
+                <span class="ok">[ OK ]</span>
+                Nmap reconnaissance module loaded
+            </div>
+
+            <div>
+                <span class="ok">[ OK ]</span>
+                Cloud security module loaded
+            </div>
+
+            <div>
+                <span class="info">[ INFO ]</span>
+                Security console ready for authorized assessment
+            </div>
+
+            <div>
+                <span class="prompt">root@sentinel:~$</span>
+                <span class="green">_</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MODULES
+    ========================= -->
+
+    <div class="section-head">
+
+        <div class="section-title">
+            SECURITY ASSESSMENT MODULES
+        </div>
+
+        <div class="section-status">
+            ● ALL SYSTEMS READY
+        </div>
+
+    </div>
+
+
+    <section class="modules">
+
+
+        <!-- =========================
+             WEBSHIELD
+        ========================= -->
+
+        <article class="module">
+
+            <div class="module-head">
+
+                <div class="module-name">
+
+                    <div class="module-icon">
+                        ◉
+                    </div>
+
+                    <h2>
+                        WEBSHIELD
+                    </h2>
+
+                </div>
+
+                <div class="module-state">
+                    ONLINE
+                </div>
+
+            </div>
+
+
+            <div class="description">
+
+                HTTP security reconnaissance and
+                security-header analysis.
+
+            </div>
+
+
+            <form action="/webshield" method="POST">
+
+                <input
+                    type="text"
+                    name="url"
+                    placeholder="target → https://example.com"
+                    required
+                >
+
+                <button type="submit">
+                    [ ANALYZE TARGET ]
+                </button>
+
+            </form>
+
+
+            {% if web_result %}
+
+            <div class="result">
+
+                <div class="score">
+                    {{ web_result.score }}/100
+                </div>
+
+                <div class="result-label">
+                    SECURITY SCORE
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>HTTP STATUS</span>
+
+                    <strong>
+                        {{ web_result.status }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-row">
+
+                    <span>HTTPS</span>
+
+                    {% if web_result.https %}
+
+                    <strong class="green">
+                        ENABLED ✓
+                    </strong>
+
                     {% else %}
-                        🔴 {{ header }}
+
+                    <strong class="red">
+                        DISABLED ✕
+                    </strong>
+
                     {% endif %}
 
-                </li>
-
-            {% endfor %}
-
-            </ul>
-
-            <h4>Findings</h4>
-
-            <ul>
-
-            {% for issue in web_result.issues %}
-
-                <li>{{ issue }}</li>
-
-            {% endfor %}
-
-            </ul>
-
-        {% endif %}
-
-    </div>
-
-    {% endif %}
-
-</div>
+                </div>
 
 
-<!-- URL DETECTOR -->
+                <div class="result-label">
+                    SECURITY HEADERS
+                </div>
 
-<div class="card">
 
-    <h2>🔗 URL Detector</h2>
+                {% for header, present in web_result.headers.items() %}
 
-    <p>
-        Detect suspicious URL characteristics.
-    </p>
+                <div class="status-row">
 
-    <form action="/url-detector" method="POST">
+                    <span>
+                        {{ header }}
+                    </span>
 
-        <input
-            type="text"
-            name="url"
-            placeholder="https://example.com/login"
-            required
-        >
+                    {% if present %}
+
+                    <strong class="green">
+                        ✓
+                    </strong>
+
+                    {% else %}
+
+                    <strong class="red">
+                        ✕
+                    </strong>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+
+        <!-- =========================
+             URL DETECTOR
+        ========================= -->
+
+        <article class="module">
+
+            <div class="module-head">
+
+                <div class="module-name">
+
+                    <div class="module-icon">
+                        ◈
+                    </div>
+
+                    <h2>
+                        URL INTELLIGENCE
+                    </h2>
+
+                </div>
+
+                <div class="module-state">
+                    ONLINE
+                </div>
+
+            </div>
+
+
+            <div class="description">
+
+                Heuristic analysis engine for detecting
+                suspicious URL characteristics.
+
+            </div>
+
+
+            <form action="/url-detector" method="POST">
+
+                <input
+                    type="text"
+                    name="url"
+                    placeholder="target → suspicious-url"
+                    required
+                >
+
+                <button type="submit">
+                    [ ANALYZE URL ]
+                </button>
+
+            </form>
+
+
+            {% if url_result %}
+
+            <div class="result">
+
+                <div class="score">
+                    {{ url_result.score }}/100
+                </div>
+
+
+                <span class="risk
+                    {% if url_result.score >= 60 %}
+                        risk-high
+                    {% else %}
+                        risk-low
+                    {% endif %}
+                ">
+
+                    {{ url_result.classification }}
+
+                </span>
+
+
+                <div class="result-label">
+                    DETECTION REASONS
+                </div>
+
+
+                {% if url_result.reasons %}
+
+                <ul>
+
+                    {% for reason in url_result.reasons %}
+
+                    <li>
+                        {{ reason }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+                {% else %}
+
+                <div class="green" style="font-size:10px;">
+                    No major suspicious characteristics detected.
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+
+        <!-- =========================
+             NMAP
+        ========================= -->
+
+        <article class="module">
+
+            <div class="module-head">
+
+                <div class="module-name">
+
+                    <div class="module-icon">
+                        ⌕
+                    </div>
+
+                    <h2>
+                        NETWORK RECON
+                    </h2>
+
+                </div>
+
+                <div class="module-state">
+                    NMAP
+                </div>
+
+            </div>
+
+
+            <div class="description">
+
+                Authorized host discovery and service
+                reconnaissance using Nmap.
+
+            </div>
+
+
+            <form action="/nmap" method="POST">
+
+                <input
+                    type="text"
+                    name="target"
+                    placeholder="target → 127.0.0.1"
+                    required
+                >
+
+                <button type="submit">
+                    [ START RECON ]
+                </button>
+
+            </form>
+
+
+            {% if nmap_result %}
+
+            <div class="result">
+
+                <div class="result-label">
+                    NMAP OUTPUT
+                </div>
+
+                <pre>{{ nmap_result.output }}</pre>
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+
+        <!-- =========================
+             CLOUD
+        ========================= -->
+
+        <article class="module">
+
+            <div class="module-head">
+
+                <div class="module-name">
+
+                    <div class="module-icon">
+                        ◇
+                    </div>
+
+                    <h2>
+                        CLOUD AUDIT
+                    </h2>
+
+                </div>
+
+                <div class="module-state">
+                    AWS
+                </div>
+
+            </div>
+
+
+            <div class="description">
+
+                Cloud configuration security assessment
+                for common AWS security risks.
+
+            </div>
+
+
+            <form action="/cloud" method="GET">
+
+                <button type="submit">
+                    [ RUN CLOUD AUDIT ]
+                </button>
+
+            </form>
+
+
+            {% if cloud_result %}
+
+            <div class="result">
+
+                <div class="score">
+                    {{ cloud_result.score }}/100
+                </div>
+
+                <div class="result-label">
+                    SECURITY FINDINGS
+                </div>
+
+
+                {% for finding in cloud_result.findings %}
+
+                <div class="finding">
+
+                    <span class="severity
+                        {% if finding.severity == 'HIGH' %}
+                            high
+                        {% elif finding.severity == 'MEDIUM' %}
+                            medium
+                        {% else %}
+                            low
+                        {% endif %}
+                    ">
+
+                        {{ finding.severity }}
+
+                    </span>
+
+
+                    <span class="finding-text">
+
+                        {{ finding.issue }}
+
+                    </span>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+        </article>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        CYBERSENTINEL // DEFENSIVE SECURITY ASSESSMENT PLATFORM
 
         <br>
 
-        <button>
-            Analyze URL
-        </button>
-
-    </form>
-
-
-    {% if url_result %}
-
-    <div class="result">
-
-        <div class="score">
-
-            {{ url_result.score }}/100
-
-        </div>
-
-        <h3>
-
-            {{ url_result.classification }}
-
-        </h3>
-
-        <h4>Reasons</h4>
-
-        {% if url_result.reasons %}
-
-        <ul>
-
-        {% for reason in url_result.reasons %}
-
-            <li>{{ reason }}</li>
-
-        {% endfor %}
-
-        </ul>
-
-        {% else %}
-
-            <p>🟢 No obvious suspicious indicators.</p>
-
-        {% endif %}
-
-    </div>
-
-    {% endif %}
-
-</div>
-
-
-<!-- NMAP -->
-
-<div class="card">
-
-    <h2>🔍 Vulnerability Scanner</h2>
-
-    <p>
-        Perform authorized Nmap scanning.
-    </p>
-
-    <form action="/nmap" method="POST">
-
-        <input
-            type="text"
-            name="target"
-            placeholder="127.0.0.1"
-            required
-        >
+        Authorized security testing and educational use only.
 
         <br>
 
-        <button>
-            Start Scan
-        </button>
+        Python • Flask • Nmap • Web Security • Cloud Security
 
-    </form>
+    </footer>
 
-
-    {% if nmap_result %}
-
-    <div class="result">
-
-        {% if nmap_result.success %}
-
-            <pre>{{ nmap_result.output }}</pre>
-
-        {% else %}
-
-            <p class="high">
-                ❌ {{ nmap_result.output }}
-            </p>
-
-        {% endif %}
-
-    </div>
-
-    {% endif %}
-
-</div>
-
-
-<!-- CLOUD -->
-
-<div class="card">
-
-    <h2>☁️ Cloud Security</h2>
-
-    <p>
-        AWS configuration security monitoring.
-    </p>
-
-    <a href="/cloud">
-
-        <button>
-            Run Cloud Assessment
-        </button>
-
-    </a>
-
-
-    {% if cloud_result %}
-
-    <div class="result">
-
-        <div class="score">
-
-            {{ cloud_result.score }}/100
-
-        </div>
-
-        <h4>Findings</h4>
-
-        <ul>
-
-        {% for finding in cloud_result.findings %}
-
-            <li>
-
-                <b>{{ finding.severity }}</b>
-                —
-                {{ finding.issue }}
-
-            </li>
-
-        {% endfor %}
-
-        </ul>
-
-    </div>
-
-    {% endif %}
-
-</div>
-
-
-</div>
-
-
-<br>
-
-
-<div class="card">
-
-    <h2>🛡️ Ethical Use</h2>
-
-    <p>
-
-        CyberSentinel is designed for authorized
-        security testing and defensive security
-        assessment only.
-
-    </p>
-
-</div>
-
-
-</div>
-
+</main>
 
 </body>
-
 </html>
