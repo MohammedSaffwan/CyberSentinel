@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>CyberSentinel</title>
+
+    <style>
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #080d1a;
+    color: #f8fafc;
+    overflow-x: hidden;
+}
+
+/* HEADER */
+
+header {
+    padding: 35px 5%;
+    background: #101827;
+    border-bottom: 1px solid #263244;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+}
+
+header p {
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 18px;
+}
+
+/* MAIN */
+
+.container {
+    width: 90%;
+    max-width: 1500px;
+    margin: auto;
+    padding: 45px 0;
+}
+
+.container > h2 {
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+/* MODULE GRID */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+/* CARD */
+
+.card {
+    min-width: 0;
+    background: #111827;
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid #263244;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease,
+                border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #3b82f6;
+}
+
+.card h2 {
+    margin-top: 0;
+    font-size: 27px;
+}
+
+.card p {
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+/* INPUTS */
+
+input {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #f8fafc;
+    color: #111827;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* BUTTON */
+
+button {
+    padding: 13px 22px;
+    margin-top: 2px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+/* RESULTS */
+
+.result {
+    margin-top: 22px;
+    padding: 22px;
+    background: #0b1220;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+    overflow-x: auto;
+}
+
+.score {
+    font-size: 42px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.result h3 {
+    margin-top: 10px;
+}
+
+.result ul {
+    padding-left: 22px;
+}
+
+.result li {
+    margin: 10px 0;
+    color: #cbd5e1;
+}
+
+/* NMAP OUTPUT */
+
+pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #a7f3d0;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* LINKS */
+
+a {
+    text-decoration: none;
+}
+
+/* SECURITY NOTICE */
+
+.container > .card {
+    margin-top: 30px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 34px;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+
+@media (max-width: 500px) {
+
+    header {
+        padding: 25px 20px;
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    header p {
+        font-size: 15px;
+    }
+
+    .container {
+        padding: 30px 0;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    .card h2 {
+        font-size: 23px;
+    }
+}
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>🛡️ CyberSentinel</h1>
+
+    <p>
+        Unified Cybersecurity Monitoring &
+        Security Assessment Platform
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+<h2>Security Modules</h2>
+
+
+<div class="cards">
+
+
+<!-- WEBSHIELD -->
+
+<div class="card">
+
+    <h2>🌐 WebShield</h2>
+
+    <p>
+        Analyze website security configuration.
+    </p>
+
+    <form action="/webshield" method="POST">
+
+        <input
+            type="text"
+            name="url"
+            placeholder="https://example.com"
+            required
+        >
+
+        <br>
+
+        <button>
+            Analyze Website
+        </button>
+
+    </form>
+
+
+    {% if web_result %}
+
+    <div class="result">
+
+        {% if web_result.error %}
+
+            <p class="high">
+                ❌ {{ web_result.error }}
+            </p>
+
+        {% else %}
+
+            <div class="score">
+                {{ web_result.score }}/100
+            </div>
+
+            <p>
+                HTTP Status:
+                {{ web_result.status }}
+            </p>
+
+            <p>
+                HTTPS:
+                {% if web_result.https %}
+                    🟢 Enabled
+                {% else %}
+                    🔴 Disabled
+                {% endif %}
+            </p>
+
+            <h4>Security Headers</h4>
+
+            <ul>
+
+            {% for header, present in web_result.headers.items() %}
+
+                <li>
+
+                    {% if present %}
+                        🟢 {{ header }}
+                    {% else %}
+                        🔴 {{ header }}
+                    {% endif %}
+
+                </li>
+
+            {% endfor %}
+
+            </ul>
+
+            <h4>Findings</h4>
+
+            <ul>
+
+            {% for issue in web_result.issues %}
+
+                <li>{{ issue }}</li>
+
+            {% endfor %}
+
+            </ul>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- URL DETECTOR -->
+
+<div class="card">
+
+    <h2>🔗 URL Detector</h2>
+
+    <p>
+        Detect suspicious URL characteristics.
+    </p>
+
+    <form action="/url-detector" method="POST">
+
+        <input
+            type="text"
+            name="url"
+            placeholder="https://example.com/login"
+            required
+        >
+
+        <br>
+
+        <button>
+            Analyze URL
+        </button>
+
+    </form>
+
+
+    {% if url_result %}
+
+    <div class="result">
+
+        <div class="score">
+
+            {{ url_result.score }}/100
+
+        </div>
+
+        <h3>
+
+            {{ url_result.classification }}
+
+        </h3>
+
+        <h4>Reasons</h4>
+
+        {% if url_result.reasons %}
+
+        <ul>
+
+        {% for reason in url_result.reasons %}
+
+            <li>{{ reason }}</li>
+
+        {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+            <p>🟢 No obvious suspicious indicators.</p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- NMAP -->
+
+<div class="card">
+
+    <h2>🔍 Vulnerability Scanner</h2>
+
+    <p>
+        Perform authorized Nmap scanning.
+    </p>
+
+    <form action="/nmap" method="POST">
+
+        <input
+            type="text"
+            name="target"
+            placeholder="127.0.0.1"
+            required
+        >
+
+        <br>
+
+        <button>
+            Start Scan
+        </button>
+
+    </form>
+
+
+    {% if nmap_result %}
+
+    <div class="result">
+
+        {% if nmap_result.success %}
+
+            <pre>{{ nmap_result.output }}</pre>
+
+        {% else %}
+
+            <p class="high">
+                ❌ {{ nmap_result.output }}
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- CLOUD -->
+
+<div class="card">
+
+    <h2>☁️ Cloud Security</h2>
+
+    <p>
+        AWS configuration security monitoring.
+    </p>
+
+    <a href="/cloud">
+
+        <button>
+            Run Cloud Assessment
+        </button>
+
+    </a>
+
+
+    {% if cloud_result %}
+
+    <div class="result">
+
+        <div class="score">
+
+            {{ cloud_result.score }}/100
+
+        </div>
+
+        <h4>Findings</h4>
+
+        <ul>
+
+        {% for finding in cloud_result.findings %}
+
+            <li>
+
+                <b>{{ finding.severity }}</b>
+                —
+                {{ finding.issue }}
+
+            </li>
+
+        {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+
+</div>
+
+
+<br>
+
+
+<div class="card">
+
+    <h2>🛡️ Ethical Use</h2>
+
+    <p>
+
+        CyberSentinel is designed for authorized
+        security testing and defensive security
+        assessment only.
+
+    </p>
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>
