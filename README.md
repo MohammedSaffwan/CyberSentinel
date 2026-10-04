@@ -70,3 +70,15 @@ CyberSentinel/
 │
 └── templates/
     └── index.html
+
+## 🖥️ Dashboard
+
+CyberSentinel provides a security-operations-style dashboard for performing authorized security assessments.
+
+![CyberSentinel Dashboard](dashboard.png)
+
+## 🔍 Network Reconnaissance
+
+Authorized Nmap scanning can be performed against local or authorized targets.
+
+![Network Recon](nmap.png)
