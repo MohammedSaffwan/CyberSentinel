@@ -4,6 +4,11 @@ CyberSentinel is a unified cybersecurity monitoring and security assessment plat
 
 It combines multiple defensive security tools into a single web dashboard for authorized security testing and security assessment.
 
+## 🌐 Live Demo
+
+🚀 **Try CyberSentinel online:**
+
+[🔐 Launch CyberSentinel](https://cybersentinel-twgt.onrender.com/)
 ## 🚀 Features
 
 ### 🌐 WebShield
